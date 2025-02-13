@@ -8,5 +8,6 @@ import { TouristPackage } from './entities/tourist-package.entity';
   imports: [TypeOrmModule.forFeature([TouristPackage])],
   controllers: [TouristPackageController],
   providers: [TouristPackageService],
+  exports: [TouristPackageService],
 })
 export class TouristPackageModule {}

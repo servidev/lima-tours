@@ -15,16 +15,16 @@ export class Reservation {
   id: number;
 
   @Column()
-  clientfullName: string;
+  cliente_nombre: string;
 
   @Column()
   email: string;
 
-  @Column()
-  phone: number;
+  @Column({ length: 9 })
+  telefono: string;
 
   @Column()
-  dateReservation: Date;
+  fecha_reserva: Date;
 
   @CreateDateColumn()
   createdAt: Date;

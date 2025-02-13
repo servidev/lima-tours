@@ -45,7 +45,11 @@ export class TouristPackageController {
     @Param('id') id: string,
     @Body() updateTouristPackageDto: UpdateTouristPackageDto,
   ) {
-    return this.touristPackageService.update(+id, updateTouristPackageDto);
+    const result = await this.touristPackageService.update(
+      +id,
+      updateTouristPackageDto,
+    );
+    return { success: true, result };
   }
 
   @Delete(':id')

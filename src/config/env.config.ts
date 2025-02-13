@@ -9,4 +9,7 @@ export const envConfig = () => ({
   API_PORT: process.env.API_PORT,
   CORS_ORIGIN: process.env.CORS_ORIGIN,
   CORS_METHODS: process.env.CORS_METHODS,
+
+  EMAIL_USER: process.env.EMAIL_USER,
+  EMAIL_PASS: process.env.EMAIL_PASS,
 });

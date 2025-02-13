@@ -12,6 +12,7 @@ import { typeOrmConfig } from './config/typeorm.config';
 import { IsUniqueConstraint } from './common/validator/is-unique-constraint';
 import { AuthModule } from './modules/auth/auth.module';
 import { UserModule } from './modules/user/user.module';
+import { MailModule } from './modules/mail/mail.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { UserModule } from './modules/user/user.module';
     ReservationModule,
     AuthModule,
     UserModule,
+    MailModule,
   ],
   controllers: [AppController],
   providers: [AppService, IsUniqueConstraint],

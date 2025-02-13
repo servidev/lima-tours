@@ -24,10 +24,10 @@ export class TouristPackageService {
   async create(
     createTouristPackageDto: CreateTouristPackageDto,
   ): Promise<TouristPackage> {
-    const newTouristPackage = this.touristPackage.create(
-      createTouristPackageDto,
-    );
     try {
+      const newTouristPackage = this.touristPackage.create(
+        createTouristPackageDto,
+      );
       return await this.touristPackage.save(newTouristPackage);
     } catch (error) {
       this.handleDBExceptions(error);
@@ -67,18 +67,17 @@ export class TouristPackageService {
     id: number,
     updateTouristPackageDto: UpdateTouristPackageDto,
   ): Promise<TouristPackage> {
-    const touristPackage = await this.findOne({ id: id });
-
-    if (!touristPackage) {
-      throw new NotFoundException(`touristPackages  not found`);
-    }
-
-    const loadTouristPackage = await this.touristPackage.preload({
-      id,
-      ...updateTouristPackageDto,
-    });
-
     try {
+      const touristPackage = await this.findOne({ id: id });
+
+      if (!touristPackage) {
+        throw new NotFoundException(`touristPackages  not found`);
+      }
+
+      const loadTouristPackage = await this.touristPackage.preload({
+        id,
+        ...updateTouristPackageDto,
+      });
       return await this.touristPackage.save(loadTouristPackage);
     } catch (error) {
       this.handleDBExceptions(error);
@@ -93,7 +92,7 @@ export class TouristPackageService {
   async search(term: string): Promise<TouristPackage[] | null> {
     return await this.touristPackage.find({
       where: {
-        name: Like(`%${term}%`),
+        nombre: Like(`%${term}%`),
       },
     });
   }

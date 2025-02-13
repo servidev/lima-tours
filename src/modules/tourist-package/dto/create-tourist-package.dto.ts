@@ -4,26 +4,26 @@ import { IsUnique } from 'src/common/decorators/is-unique.decorator';
 export class CreateTouristPackageDto {
   @IsNotEmpty({ message: 'Requerido' })
   @IsUnique(
-    { tableName: 'tourist_packages', column: 'name' },
+    { tableName: 'tourist_packages', column: 'nombre' },
     { message: 'Ya existe el paquete' },
   )
-  name: string;
+  nombre: string;
 
   @IsNumber({}, { message: 'No válido' })
   @IsPositive({ message: 'Debe ser positivo' })
   @IsNotEmpty({ message: 'Requerido' })
-  price: number;
+  precio: number;
 
   @IsNumber({}, { message: 'No válido' })
   @IsPositive({ message: 'Debe ser positivo' })
   @IsNotEmpty({ message: 'Requerido' })
-  duration: number;
+  duracion: number;
 
   @IsNotEmpty({ message: 'Requerida' })
-  description: string;
+  descripcion: string = '';
 
   @IsNumber({}, { message: 'No válido' })
   @IsPositive({ message: 'Debe ser positivo' })
   @IsNotEmpty({ message: 'Requerido' })
-  availability: number;
+  disponibilidad: number;
 }

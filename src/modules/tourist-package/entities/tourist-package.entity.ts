@@ -17,19 +17,19 @@ export class TouristPackage {
   id: number;
 
   @Column({ unique: true })
-  name: string;
+  nombre: string;
 
   @Column({ type: 'decimal', precision: 10, scale: 2 })
-  price: number;
+  precio: number;
 
   @Column()
-  duration: number;
+  duracion: number;
 
   @Column({ type: 'text' })
-  description: string;
+  descripcion: string;
 
   @Column()
-  availability: number;
+  disponibilidad: number;
 
   @CreateDateColumn()
   createdAt: Date;
@@ -44,7 +44,7 @@ export class TouristPackage {
   @BeforeInsert()
   @BeforeUpdate()
   fnUpperCase() {
-    this.name = this.name.toUpperCase();
+    this.nombre = this.nombre.toUpperCase();
   }
 
   @OneToMany(() => Reservation, (reservation) => reservation.touristPackage)
