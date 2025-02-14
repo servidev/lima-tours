@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { AppController } from './app.controller';
 import { TouristPackageModule } from './modules/tourist-package/tourist-package.module';
 import { ReservationModule } from './modules/reservation/reservation.module';
 import { ConfigModule } from '@nestjs/config';
@@ -29,7 +30,7 @@ import { MailModule } from './modules/mail/mail.module';
     UserModule,
     MailModule,
   ],
-  controllers: [],
+  controllers: [AppController],
   providers: [IsUniqueConstraint],
 })
 export class AppModule {}

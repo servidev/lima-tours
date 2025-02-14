@@ -6,6 +6,7 @@ import { useContainer } from 'class-validator';
 import { envConfig } from './config/env.config';
 import { WinstonModule } from 'nest-winston';
 import { winstonConfig } from './common/winston/winston-config';
+import { apiDescription } from './common/utils/descriptionSwagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
@@ -13,7 +14,10 @@ async function bootstrap() {
   });
   const configEnv = envConfig();
 
-  app.setGlobalPrefix('api');
+  app.setGlobalPrefix('api', {
+    exclude: ['/'],
+  });
+
   app.useGlobalPipes(new CustomValidationPipe());
   useContainer(app.select(AppModule), { fallbackOnErrors: true });
 
@@ -24,10 +28,7 @@ async function bootstrap() {
 
   const swaggerConfig = new DocumentBuilder()
     .setTitle('API de Reservaciones de Tours')
-    .setDescription(
-      'Esta API permite gestionar clientes y realizar reservaciones para diferentes tours. ' +
-        'Incluye endpoints para registrar nuevos clientes y gestionar la reserva de tours de manera eficiente.',
-    )
+    .setDescription(apiDescription)
     .setVersion('1.0')
     .addBearerAuth()
     .build();
