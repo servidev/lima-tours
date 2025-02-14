@@ -1,99 +1,179 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# API REST - Gestión de Paquetes Turísticos y Reservas
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Este proyecto es una API REST desarrollada en **NestJS** para gestionar **paquetes turísticos** y **reservas**.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## 📌 Características Principales
 
-## Description
+- **CRUD de Paquetes Turísticos** con búsqueda, paginación y validación de nombres únicos.
+- **CRUD de Reservas** con notificación por correo electrónico.
+- **Autenticación JWT** con roles (`ADMIN` y `USER`).
+- **Paginación** en listados de paquetes y reservas.
+- **Logs de errores con Winston**.
+- **Base de datos MySQL** con TypeORM.
+- **Pruebas unitarias con Jest**.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+---
 
-## Project setup
+## 🚀 Instalación y Configuración
+
+1. Clonar el repositorio.
 
 ```bash
-$ npm install
+ git clone <repositorio>
+ cd <directorio>
 ```
 
-## Compile and run the project
+2. Instalar dependencias.
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+ npm install
 ```
 
-## Run tests
+3. Configurar las variables de entorno.
+
+Renombrar el archivo `.env.example` a `.env` y establecer las credenciales necesarias.
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+ mv .env.example .env
 ```
 
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+4. Levantar el servidor.
 
 ```bash
-$ npm install -g mau
-$ mau deploy
+ npm run start:dev
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+---
 
-## Resources
+## 🔐 Autenticación
 
-Check out a few resources that may come in handy when working with NestJS:
+Se implementó autenticación con **JWT** y creación de usuario.
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+- **Roles:** `ADMIN` y `USER` (solo `USER` es necesario para acceder a los endpoints protegidos).
+- **Duración del Token:** 24 horas.
 
-## Support
+### **Endpoints de Autenticación**
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+- **Registrar Usuario:** `POST /users`
+- **Iniciar Sesión:** `POST /auth`
 
-## Stay in touch
+Al iniciar sesión, se obtiene un token de acceso que debe enviarse en los endpoints protegidos en el **header Authorization**:
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+```bash
+Authorization: Bearer <TOKEN>
+```
 
-## License
+---
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+## 💃 Base de Datos
+
+Se utiliza **TypeORM** con **MySQL**. Al iniciar el servidor, las tablas se crean automáticamente gracias a la configuración:
+
+📝 `src/config/typeorm.config.ts` → `synchronize: true`
+
+---
+
+## 📌 Endpoints Disponibles
+
+### **Paquetes Turísticos** (`/tourist-packages`)
+
+- **Crear Paquete:** `POST /tourist-packages`
+- **Listar Paquetes:** `GET /tourist-packages?page=1&limit=2` (paginación incluida)
+- **Buscar Paquete:** `GET /tourist-packages/search/machu`  
+  📌 _Dado que esta es una búsqueda básica, se implementó con una ruta directa. Para búsquedas con más parámetros, se recomienda usar query params._
+- **Obtener Paquete por ID:** `GET /tourist-packages/:id`
+- **Actualizar Paquete:** `PATCH /tourist-packages/:id`
+- **Eliminar Paquete:** `DELETE /tourist-packages/:id`
+
+📌 **Validación**: Se creó un decorador `@IsUnique()` para evitar nombres duplicados en paquetes turísticos.
+
+📌 **Interceptor para Actualización**: Se implementó un **interceptor** que asigna el `id` del paquete al cuerpo de la solicitud en las actualizaciones (`PATCH`), permitiendo que `@IsUnique()` detecte si un nombre ya existe y evite valores duplicados.
+
+### **Reservas** (`/reservations`)
+
+- **Crear Reserva:** `POST /reservations`
+- **Listar Reservas:** `GET /reservations?page=1&limit=2`
+- **Buscar Reserva:** `GET /reservations/search/peter`  
+  📌 _Esta búsqueda es básica, por lo que se usa en la ruta directa. Si se requieren más parámetros, se deben utilizar query params._
+- **Obtener Reserva por ID:** `GET /reservations/:id`
+- **Actualizar Reserva:** `PATCH /reservations/:id`
+- **Eliminar Reserva:** `DELETE /reservations/:id`
+
+📌 **Notificación por Email:** Cuando se crea una reserva, se envía un email de confirmación utilizando **Nodemailer**.
+
+📧 **Configuración de Email:** Se ha preconfigurado una cuenta de ejemplo con credenciales en las variables de entorno.
+
+---
+
+## 📊 Logs de Errores
+
+Se instaló **Winston** para registrar errores en la carpeta `/logs` en la raíz del proyecto.
+
+---
+
+## 🧩 Pruebas Unitarias
+
+Se realizaron pruebas unitarias con Jest para garantizar el correcto funcionamiento de la API.
+
+📌 Cobertura de pruebas:
+
+Controlador de Reservas (reservations)
+Controlador de Paquetes Turísticos (tourist-packages)
+
+Ejecutar pruebas:
+
+```bash
+ npm run test
+```
+
+---
+
+## 📂 Estructura del Proyecto
+
+```
+📛 src
+📦 src
+ ┣ 📂 common  # Utilidades compartidas
+ ┃ ┣ 📂 decorators  # Decoradores personalizados
+ ┃ ┣ 📂 enums  # Enumeraciones utilizadas en el sistema
+ ┃ ┣ 📂 interceptors  # Interceptores para manipular requests/responses
+ ┃ ┣ 📂 interfaces  # Definiciones de interfaces comunes
+ ┃ ┣ 📂 pipes  # Pipes personalizados
+ ┃ ┣ 📂 utils  # Funciones auxiliares
+ ┃ ┣ 📂 validator  # Validadores personalizados
+ ┃ ┗ 📂 winston  # Configuración de logs con Winston
+ ┣ 📂 config  # Configuraciones del sistema
+ ┃ ┣ 📜 env.config.ts  # Configuración de variables de entorno
+ ┃ ┣ 📜 jwt.config.ts  # Configuración de autenticación JWT
+ ┃ ┗ 📜 typeorm.config.ts  # Configuración de TypeORM
+ ┣ 📂 modules  # Módulos principales
+ ┃ ┣ 📂 auth  # Módulo de autenticación
+ ┃ ┣ 📂 mail  # Módulo de envío de correos
+ ┃ ┣ 📂 reservation  # Módulo de reservas
+ ┃ ┣ 📂 tourist-package  # Módulo de paquetes turísticos
+ ┃ ┗ 📂 user  # Módulo de usuarios
+ ┣ 📜 app.controller.ts  # Controlador global de la aplicación
+ ┣ 📜 app.module.ts  # Módulo raíz de la aplicación
+ ┗ 📜 main.ts  # Punto de entrada de la aplicación
+
+```
+
+---
+
+## 📝 Notas Finales
+
+✅ **Recuerda renombrar `.env.example` a `.env` antes de ejecutar el proyecto.**
+
+✅ **Se implementó búsqueda en ambas entidades (paquetes y reservas).**
+
+✅ **Los listados incluyen paginación con parámetros:** `?page=1&limit=2` (Ejemplo).
+
+✅ **Decorador `@IsUnique()` en paquetes turísticos para evitar nombres duplicados.**
+
+✅ **Se implementó un interceptor para ayudar a `@IsUnique()` en las actualizaciones.**
+
+✅ **Errores registrados con Winston en `/logs`.**
+
+✅ **Se envía un email de confirmación al crear una reserva.**
+
+✅ **Base de datos con TypeORM en MySQL, genera las tablas automáticamente.**
