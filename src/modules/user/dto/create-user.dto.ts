@@ -1,5 +1,5 @@
 import { IsEmail, IsNotEmpty, IsOptional, Length } from 'class-validator';
-import { IsUnique } from 'src/common/decorators/is-unique.decorator';
+import { IsUnique } from '@/common/decorators/is-unique.decorator';
 
 export class CreateUserDto {
   @IsNotEmpty({ message: 'Requerido' })

@@ -8,19 +8,23 @@ import {
   Delete,
   Query,
   UseInterceptors,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { TouristPackageService } from './tourist-package.service';
 import { CreateTouristPackageDto } from './dto/create-tourist-package.dto';
 import { UpdateTouristPackageDto } from './dto/update-tourist-package.dto';
-import { AssignIdInterceptor } from 'src/common/interceptors/assign-id.interceptor';
+import { AssignIdInterceptor } from '@/common/interceptors/assign-id.interceptor';
 import { Auth } from '../auth/decorators/auth.decorator';
-import { Role } from 'src/common/enums/rol.enum';
+import { Role } from '@/common/enums/rol.enum';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Paquetes turísticos')
 @Controller('tourist-packages')
 export class TouristPackageController {
   constructor(private readonly touristPackageService: TouristPackageService) {}
 
   @Post()
+  @ApiBearerAuth()
   @Auth([Role.USER])
   async create(@Body() createTouristPackageDto: CreateTouristPackageDto) {
     const result = await this.touristPackageService.create(
@@ -30,7 +34,6 @@ export class TouristPackageController {
   }
 
   @Get()
-  @Auth([Role.USER])
   async findAll(@Query('page') _page: string, @Query('limit') _limit: string) {
     const page = +_page;
     const limit = +_limit;
@@ -39,23 +42,25 @@ export class TouristPackageController {
   }
 
   @Patch(':id')
+  @ApiBearerAuth()
   @Auth([Role.USER])
   @UseInterceptors(AssignIdInterceptor)
   async update(
-    @Param('id') id: string,
+    @Param('id', ParseIntPipe) id: number,
     @Body() updateTouristPackageDto: UpdateTouristPackageDto,
   ) {
     const result = await this.touristPackageService.update(
-      +id,
+      id,
       updateTouristPackageDto,
     );
     return { success: true, result };
   }
 
   @Delete(':id')
+  @ApiBearerAuth()
   @Auth([Role.USER])
-  async remove(@Param('id') id: string) {
-    const result = await this.touristPackageService.remove(+id);
+  async remove(@Param('id', ParseIntPipe) id: number) {
+    const result = await this.touristPackageService.remove(id);
     return { success: true, dataRemove: result };
   }
 

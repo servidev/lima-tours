@@ -1,4 +1,4 @@
-import { TouristPackage } from 'src/modules/tourist-package/entities/tourist-package.entity';
+import { TouristPackage } from '@/modules/tourist-package/entities/tourist-package.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,

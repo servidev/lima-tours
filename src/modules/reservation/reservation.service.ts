@@ -10,9 +10,10 @@ import { UpdateReservationDto } from './dto/update-reservation.dto';
 import { Reservation } from './entities/reservation.entity';
 import { FindOptionsWhere, Like, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { pagination } from 'src/common/utils/pagination';
+import { pagination } from '@/common/utils/pagination';
 import { TouristPackageService } from '../tourist-package/tourist-package.service';
 import { MailService } from '../mail/mail.service';
+import { getReservationEmailBody } from '@/common/utils/emailTemplates';
 
 @Injectable()
 export class ReservationService {
@@ -41,13 +42,10 @@ export class ReservationService {
 
       const reservation = await this.reservation.save(newReservation);
 
-      const body = {
-        to: reservation.email,
-        subject: 'Reserva creada',
-        text: `Tu reserva para ${touristPackage.nombre} ha sido creada.`,
-        html: `Tu reserva para ${touristPackage.nombre} ha sido creada.`,
-      };
+      //! GENERAMOS EL CUERPO DEL EMAIL
+      const body = getReservationEmailBody(reservation, touristPackage);
 
+      //! ENVIAMOS EL EMAIL AL CLIENTE
       await this.mailService.sendMail(
         body.to,
         body.subject,

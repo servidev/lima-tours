@@ -1,6 +1,4 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { TouristPackageModule } from './modules/tourist-package/tourist-package.module';
 import { ReservationModule } from './modules/reservation/reservation.module';
 import { ConfigModule } from '@nestjs/config';
@@ -31,7 +29,7 @@ import { MailModule } from './modules/mail/mail.module';
     UserModule,
     MailModule,
   ],
-  controllers: [AppController],
-  providers: [AppService, IsUniqueConstraint],
+  controllers: [],
+  providers: [IsUniqueConstraint],
 })
 export class AppModule {}

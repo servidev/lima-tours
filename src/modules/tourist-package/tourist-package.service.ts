@@ -10,7 +10,7 @@ import { UpdateTouristPackageDto } from './dto/update-tourist-package.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { TouristPackage } from './entities/tourist-package.entity';
 import { FindOptionsWhere, Like, Repository } from 'typeorm';
-import { pagination } from 'src/common/utils/pagination';
+import { pagination } from '@/common/utils/pagination';
 
 @Injectable()
 export class TouristPackageService {

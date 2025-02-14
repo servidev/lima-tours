@@ -1,5 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { CustomValidationPipe } from './common/pipes/custom.validation.pipe';
 import { useContainer } from 'class-validator';
 import { envConfig } from './config/env.config';
@@ -10,17 +11,30 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     logger: WinstonModule.createLogger(winstonConfig),
   });
-  const config = envConfig();
+  const configEnv = envConfig();
 
   app.setGlobalPrefix('api');
   app.useGlobalPipes(new CustomValidationPipe());
   useContainer(app.select(AppModule), { fallbackOnErrors: true });
 
   app.enableCors({
-    origin: config.CORS_ORIGIN?.split(','),
-    methods: config.CORS_METHODS,
+    origin: configEnv.CORS_ORIGIN?.split(','),
+    methods: configEnv.CORS_METHODS,
   });
 
-  await app.listen(config.API_PORT);
+  const swaggerConfig = new DocumentBuilder()
+    .setTitle('API de Reservaciones de Tours')
+    .setDescription(
+      'Esta API permite gestionar clientes y realizar reservaciones para diferentes tours. ' +
+        'Incluye endpoints para registrar nuevos clientes y gestionar la reserva de tours de manera eficiente.',
+    )
+    .setVersion('1.0')
+    .addBearerAuth()
+    .build();
+
+  const document = SwaggerModule.createDocument(app, swaggerConfig);
+  SwaggerModule.setup('api', app, document);
+
+  await app.listen(configEnv.API_PORT);
 }
 bootstrap();

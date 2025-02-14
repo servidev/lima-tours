@@ -8,19 +8,23 @@ import {
   Delete,
   Query,
   UseInterceptors,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { ReservationService } from './reservation.service';
 import { CreateReservationDto } from './dto/create-reservation.dto';
 import { UpdateReservationDto } from './dto/update-reservation.dto';
 import { Auth } from '../auth/decorators/auth.decorator';
-import { Role } from 'src/common/enums/rol.enum';
-import { AssignIdInterceptor } from 'src/common/interceptors/assign-id.interceptor';
+import { Role } from '@/common/enums/rol.enum';
+import { AssignIdInterceptor } from '@/common/interceptors/assign-id.interceptor';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Reservaciones')
 @Controller('reservations')
 export class ReservationController {
   constructor(private readonly reservationService: ReservationService) {}
 
   @Post()
+  @ApiBearerAuth()
   @Auth([Role.USER])
   async create(@Body() createReservationDto: CreateReservationDto) {
     const result = await this.reservationService.create(createReservationDto);
@@ -28,7 +32,6 @@ export class ReservationController {
   }
 
   @Get()
-  @Auth([Role.USER])
   async findAll(@Query('page') _page: string, @Query('limit') _limit: string) {
     const page = +_page;
     const limit = +_limit;
@@ -37,23 +40,25 @@ export class ReservationController {
   }
 
   @Patch(':id')
+  @ApiBearerAuth()
   @Auth([Role.USER])
   @UseInterceptors(AssignIdInterceptor)
   async update(
-    @Param('id') id: string,
+    @Param('id', ParseIntPipe) id: number,
     @Body() updateReservationDto: UpdateReservationDto,
   ) {
     const result = await this.reservationService.update(
-      +id,
+      id,
       updateReservationDto,
     );
     return { success: true, result };
   }
 
   @Delete(':id')
+  @ApiBearerAuth()
   @Auth([Role.USER])
-  async remove(@Param('id') id: string) {
-    const result = await this.reservationService.remove(+id);
+  async remove(@Param('id', ParseIntPipe) id: number) {
+    const result = await this.reservationService.remove(id);
     return { success: true, dataRemove: result };
   }
 
